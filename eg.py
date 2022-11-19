@@ -84,3 +84,4 @@ for ip in range(0, 256):
 
 # https://stackoverflow.com/questions/24196932/how-can-i-get-the-ip-address-from-a-nic-network-interface-controller-in-python
 # https://www.tutorialspoint.com/python-program-to-find-the-ip-address-of-the-client
+# https://scapy.readthedocs.io/en/latest/routing.html#get-local-ip-ip-of-an-interface  -- scapy based must read

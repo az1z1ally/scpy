@@ -14,7 +14,7 @@ def help():
 def passive_scan(iface):
     def arp_display(pkt):
         if pkt[ARP].op == 2: #is-at (response)
-            return f"{pkt[ARP].psrc} {pkt[ARP].hwsrc}"
+            print(f"{pkt[ARP].psrc} {pkt[ARP].hwsrc}")
 
     #sniff and filter only arp traffic
     sniff(iface=iface, filter="arp", prn=arp_display, store=1)
@@ -22,7 +22,10 @@ def passive_scan(iface):
 
 # active scan
 def active_scan(iface):
-    # Assuming the network is /24
+    #Getting interface ip address
+    ip = get_if_addr(iface)
+    print(f"The ip address of {iface}: {ip}" )
+
     online_host = []
     TIMEOUT = 2
     conf.verb = 0
