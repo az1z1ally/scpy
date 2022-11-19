@@ -25,17 +25,14 @@ def active_scan(iface):
     #Getting interface ip address
     ip = get_if_addr(iface)
     print(f"The ip address of {iface}: {ip}" )
+    
+    # Getting gateway
+    #gw = conf.route.route(ip)
+    net = ip[:ip.rfind('.')+1] + '*'
+    # Assuming the netwwork is /24
+    ans,unans=sr(IP(dst=net)/ICMP())
+    ans.summary()
 
-    online_host = []
-    TIMEOUT = 2
-    conf.verb = 0
-    for ip in range(0, 255):
-        packet = IP(dst="192.168.0." + str(ip), ttl=20)/ICMP()
-        reply = sr1(packet, timeout=TIMEOUT)
-        if not (reply is None):
-           online_host.append[reply.dst]
-
-    print(online_host)
 
 
 # Main function

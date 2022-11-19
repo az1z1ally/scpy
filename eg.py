@@ -35,27 +35,17 @@ args = parser.parse_args()
 
 
 
+# R find 
+host = "10.10.10.15"
+host = host[:host.rfind('.')+1] + '*'
+print (host)
+
 # --------------------------- Refs ----------------------------
 # https://thepacketgeek.com/scapy/sniffing-custom-actions/part-1/    --- sniff arp
 
 
 # https://0xbharath.github.io/art-of-packet-crafting-with-scapy/network_recon/host_discovery/index.html  -- Must read
 # https://www.geeksforgeeks.org/network-scanning-using-scapy-module-python/   -- Network scanning to find connected hosts usimg scapy.ARP()
-import scapy.all as scapy
-  
-request = scapy.ARP()
-  
-request.pdst = 'x'
-broadcast = scapy.Ether()
-  
-broadcast.dst = 'ff:ff:ff:ff:ff:ff'
-  
-request_broadcast = broadcast / request
-clients = scapy.srp(request_broadcast, timeout = 1)[0]
-for element in clients:
-    print(element[1].psrc + "      " + element[1].hwsrc)
-Here x = Network range. For example x = 192.168.1.1/24, 172.16.5.1/16 etc
-
 # https://santandergto.com/en/guide-using-scapy-with-python/  --scapy basics must read
 
 
@@ -68,6 +58,7 @@ Here x = Network range. For example x = 192.168.1.1/24, 172.16.5.1/16 etc
 
 # https://gist.github.com/mgeeky/a360e4a124ddb9ef6a9ac1557b47d14c  --- ping sweep ICMP
 # https://stackoverflow.com/questions/7541056/pinging-an-ip-range-with-scapy
+
 #!/usr/bin/python
 from scapy.all import *
 
