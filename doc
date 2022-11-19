@@ -1,0 +1,65 @@
+# Ref   -- https://www.youtube.com/watch?v=KzeD3GCZGdI
+
+# Frst run
+>> scappy
+# ICMP
+packet = sr1(IP(dst="www.google.com")/ICMP())
+packet
+packet.sumary() # - summary of the response(answer)
+
+# ---------------------------------------------------------------------------------
+
+
+# TCP
+packet = sr1(IP(dst="www.google.com")/TCP(dport=80)) 
+(ans, unans) = sr(IP(dst="www.google.com")/TCP(dport=[21, 23, 80, 443]), timeout=1)
+    # - What is the important of retry, timeout and inter?
+    # timeout = time to wait after the last packet has been sent
+    # retry = time to wait before retry when there is no response
+    # inter(interval) = time inbetween packets where there is limited number of response
+
+
+# DNS
+packet = sr1(IP(dst="local_router_ip")/UDP()/DNS(rd=1, qd=DNSQR(qname="www.google.com")))
+    # - rd = Recursion Desired
+    # - qd = Query Domain
+    # - DNSQR = DNS Query Record
+    # - qname = Query Name - name of what you wish to query
+
+# ARP-PINGING
+    # - nifty tool that can be used to discover clients on the network
+    # - sends arp(whois) to every possible address.
+arping("10.0.0.*") # Testing the last 255 wildcard for our netweork
+
+
+# TRACEROUTE
+traceroute(["www.google.com"], maxttl=20)
+    # - scapy's traceroute does not use ICMP. It uses TCP(different from standard traceroute)
+    # - scapy's traceroute sends all the packets at once and does not wait for individual responses to come, thus the importance of maxttl(time to live) to avoid searching for long time
+
+# Sniffing - sniff() will read all the interfaces and scan all the ports
+    # parameters
+        # iface="eth0" - specify interface
+        # filter="icmp" - only collect icmp protocol
+        # count=10 - only correct 10 packects
+
+packet = sniff(iface="enpos3", filter="tcp and port 80", count=1)
+
+
+# WRITING AND READING PCAPS - packet capture files
+
+# Writing pcap files
+packets = sniff(iface="enpos3", filter="tcp and port 80", count=5)
+wrpcap("/tmp/pcapfile.pcap", packets)
+
+# Reading pcap files
+packets = rdpcap("/directory/pcapfile.pcap")
+packets
+packets.summary()
+
+# Wireshark integration
+wireshark(packets)
+
+
+
+#------------------------- For other links see eg.py ---------------------------
