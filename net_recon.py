@@ -38,6 +38,10 @@ def active_scan(iface):
     # Assuming the netwwork is /24
     for ip in range(0, 256):
         reply = sr1(IP(dst=net + str(ip)), timeout=3, iface=iface, verbose=0)
+        
+        if not reply:
+            continue
+
         if int(reply.getlayer(ICMP).type) == 0 and int(reply.getlayer(ICMP).code) == 0:
             responds.append(ip)
 
