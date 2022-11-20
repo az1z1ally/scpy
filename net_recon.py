@@ -43,7 +43,7 @@ def active_scan(iface):
             continue
 
         if int(reply.getlayer(ICMP).type) == 0 and int(reply.getlayer(ICMP).code) == 0:
-            responds.append(ip)
+            responds.append(net + str(ip))
 
     print(f'Hosts responded to ICMP Echo Requests are:{responds}')
 
