@@ -1,4 +1,11 @@
-from scapy.all import *
+# https://thepacketgeek.com/--- Learn scapy
+# https://thepacketgeek.com/scapy/building-network-tools/ 
+# https://thepacketgeek.com/scapy/sniffing-custom-actions/part-1/    --- sniff arp
+# https://thepacketgeek.com/scapy/sniffing-custom-actions/part-2/
+
+
+
+from scapy.all import get_if_addr, ARP, ICMP, sniff, sr1,IP, sr
 
 import sys
 import socket
@@ -13,11 +20,11 @@ def help():
 # Passive scan functionality
 def passive_scan(iface):
     def arp_display(pkt):
-        if pkt[ARP].op == 2: #is-at (response)
-            print(f"{pkt[ARP].psrc} {pkt[ARP].hwsrc}")
+        if pkt[ARP].op == 2: # check if for is-at (response)
+            return (f"{pkt[ARP].psrc} {pkt[ARP].hwsrc}")
 
     #sniff and filter only arp traffic
-    sniff(iface=iface, filter="arp", prn=arp_display, store=1)
+    sniff(iface=iface, filter="arp", prn=arp_display, store=0)
 
 
 # active scan
@@ -26,12 +33,18 @@ def active_scan(iface):
     ip = get_if_addr(iface)
     print(f"The ip address of {iface}: {ip}" )
     
-    # Getting gateway
-    #gw = conf.route.route(ip)
-    net = ip[:ip.rfind('.')+1] + '*'
+    responds = []
+    net = net = ip[:ip.rfind('.')] + '.' 
     # Assuming the netwwork is /24
-    ans,unans=sr(IP(dst=net)/ICMP())
-    ans.summary()
+    for ip in range(0, 256):
+        reply = sr1(IP(dst=net + str(ip)), timeout=3, iface=iface, verbose=0)
+        if int(reply.getlayer(ICMP).type) == 0 and int(reply.getlayer(ICMP).code) == 0:
+            responds.append(ip)
+
+    print(f'Hosts responded to ICMP Echo Requests are:{responds}')
+
+   
+   
 
 
 

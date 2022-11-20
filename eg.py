@@ -1,4 +1,4 @@
-#from scapy.all import *
+# https://thepacketgeek.com/scapy/building-network-tools/   --- Learn scapy
 
 import sys
 import os 
@@ -41,8 +41,6 @@ host = host[:host.rfind('.')+1] + '*'
 print (host)
 
 # --------------------------- Refs ----------------------------
-# https://thepacketgeek.com/scapy/sniffing-custom-actions/part-1/    --- sniff arp
-
 
 # https://0xbharath.github.io/art-of-packet-crafting-with-scapy/network_recon/host_discovery/index.html  -- Must read
 # https://www.geeksforgeeks.org/network-scanning-using-scapy-module-python/   -- Network scanning to find connected hosts usimg scapy.ARP()
