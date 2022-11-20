@@ -37,8 +37,8 @@ def active_scan(iface):
     net = net = ip[:ip.rfind('.')] + '.' 
     # Assuming the netwwork is /24
     for ip in range(0, 256):
-        reply = sr1(IP(dst=net + str(ip)), timeout=3, iface=iface, verbose=0)
-        
+        reply = sr1(IP(dst=net + str(ip))/ICMP(), timeout=3, iface=iface, verbose=0)
+
         if not reply:
             continue
 
