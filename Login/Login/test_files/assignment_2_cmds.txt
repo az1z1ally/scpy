@@ -1,0 +1,28 @@
+
+h1 xterm -fa 'Monospace' -fs 14 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Attacker" &
+
+h2 cd /home/ubuntu/assign_2/server_1
+h2 /sbin/inetd
+h2 /usr/sbin/sshd
+h2 /usr/bin/php -S 10.0.0.2:80 &
+h2 xterm -fa 'Monospace' -fs 14 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Server 1" & 
+
+h3 cd /home/ubuntu/assign_2/server_2
+h3 /usr/sbin/sshd
+#h3 xterm -fa 'Monospace' -fs 14 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Server 2" &
+
+h4 cd /home/ubuntu/assign_2/server_3
+h4 /sbin/inetd
+h4 /usr/sbin/sshd
+h4 /usr/bin/php -S 10.0.0.4:8080 &
+#h4 xterm -fa 'Monospace' -fs 14 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Server 3" &
+
+h5 cd /home/ubuntu/assign_2/server_4
+h5 /sbin/inetd
+#h5 xterm -fa 'Monospace' -fs 14 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Server 4" &
+
+h6 cd /home/ubuntu/assign_2/server_5
+h6 /sbin/inetd
+h6 /usr/sbin/sshd
+h6 /usr/bin/php -S 10.0.0.6:80
+#h5 xterm -fa 'Monospace' -fs 14 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Server 5" &

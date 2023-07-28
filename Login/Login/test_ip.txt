@@ -1,0 +1,34 @@
+mamamamma
+nnamammm
+192.168.43.44
+10.0.0.1
+---Amelye---
+10.0.0.3
+10.0.0.5
+10.0.0.2
+
+
+from telnetlib import Telnet
+
+def enc(s):
+    return s.encode('ascii') 
+
+ip ='51.254.39.241'
+port= 23
+username = 'jecha'
+passwd = 'testuser'
+
+con = Telnet(ip, port)
+con.read_until(enc('login:')) # Wait for login prompt
+con.write(enc(f'{username}\n')) # Provide username
+con.read_until(enc('assword:')) # Wait for password prompt
+con.write(enc(f'{passwd}\n')) # Provide password
+
+# Check if the working combination is found, no exception means we are connected.
+# https://stackoverflow.com/questions/47087138/python3-telnet-read-all-doesnt-work
+# Timeout parameter here is important to exit the connection, otherwise send exit command. Telnet commands i.e read_all() block until connection closed.
+rcv = con.expect([enc('Last login')], timeout=2) #  Check for Last login which is displayed when the user login succesful
+if rcv[0] >= 0:  # Check if Last login was returned == Since ascii value of rcv[0]=L is 76
+    credentials = f'{username}:{passwd}'
+    print(credentials)
+con.close()
